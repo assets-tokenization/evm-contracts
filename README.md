@@ -9,8 +9,17 @@ This repository contains the smart contracts for the Assets Tokenization project
 - [Python](https://www.python.org/downloads/).
 - [Blownie](https://eth-brownie.readthedocs.io/en/stable/install.html).
 - [Ganache](https://www.trufflesuite.com/ganache).
+- [Infura](https://app.infura.io/dashboard).
 
-## Scripts
+## Configs
+
+```sh
+# Create environment file.
+cp .env.example .env
+# Edit environment file.
+```
+
+## Test
 
 ```sh
 # Add local Ganache to use in tests.
@@ -20,15 +29,23 @@ brownie networks add Ethereum ganache-local host=http://127.0.0.1:8545 chainid=1
 brownie test --network development
 
 # Run one defined test.
-brownie test -k mint --network development
+brownie test -k tokenize --network development
+```
 
-# Deploy.
+## Deploy
+
+```sh
+# Deploy on defined network.
 brownie run scripts/deploy.py --network development
 brownie run scripts/deploy.py --network polygon-test
 brownie run scripts/deploy.py --network polygon-main
 brownie run scripts/deploy.py --network mainnet
+```
 
-# Tokenize.
+## Tokenize
+
+```sh
+# Tokenize on defined network.
 brownie run scripts/tokenize.py --network development
 brownie run scripts/tokenize.py --network polygon-test
 brownie run scripts/tokenize.py --network polygon-main
