@@ -1,7 +1,7 @@
 dotenv: .env
 constructor-args:
-  token_name: ${TOKEN_NAME}
-  token_symbol: ${TOKEN_SYMBOL}
+  contract_name: ${TOKEN_NAME}
+  contract_symbol: ${TOKEN_SYMBOL}
 gas_price_increase_coefficient: ${GAS_PRICE_INCREASE_COEFFICIENT}
 wallets:
   from_key: ${ACCOUNT_PRIVATE_KEY}
