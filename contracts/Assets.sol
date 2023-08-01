@@ -9,6 +9,7 @@ contract Assets {
     // Structs.
     struct Token {
         address owner;
+        string governmentRegistryId;
         string name;
         string description;
     }
@@ -19,7 +20,7 @@ contract Assets {
     string _symbol;
     address _tokenizer; // Allow tokenize only by this address
     address _withdrawAddress; // Allow withdraw only to this address
-    mapping(uint256 => Token) _tokens;
+    mapping(uint256 => Token) private _tokens;
     mapping(address => uint256) private _balances;
     uint256 _nextTokenId = 1;
 
@@ -67,20 +68,37 @@ contract Assets {
     }
 
     /**
+     * @dev Returns token owner
+     */
+    function getTokenOwner(uint256 tokenId) public view returns (address) {
+        return _tokens[tokenId].owner;
+    }
+
+    /**
+     * @dev Returns token government registry id
+     */
+    function getTokenGovernmentRegistryId(uint256 tokenId) public view returns (string memory) {
+        return _tokens[tokenId].governmentRegistryId;
+    }
+
+    /**
      * @dev Tokenize asset
      */
     function tokenize(
         address to,
+        string memory tokenGovernmentRegistryId,
         string memory tokenName,
         string memory tokenDescription
-    ) public onlyTokenizer {
+    ) public onlyTokenizer returns (uint256) {
         _tokens[_nextTokenId] = Token({
             owner: to,
+            governmentRegistryId: tokenGovernmentRegistryId,
             name: tokenName,
             description: tokenDescription
         });
         _balances[to] += 1;
         _nextTokenId += 1;
+        return _nextTokenId - 1;
     }
 
     /**
