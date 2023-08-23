@@ -9,6 +9,7 @@ contract Assets {
     // Structs.
     struct Token {
         address owner;
+        address grantedAccess;
         string governmentRegistryId;
         string name;
         string description;
@@ -79,6 +80,14 @@ contract Assets {
      */
     function getTokenGovernmentRegistryId(uint256 tokenId) public view returns (string memory) {
         return _tokens[tokenId].governmentRegistryId;
+    }
+
+    /**
+     * @dev Grant permission to transfer token
+     */
+    function grantPermission(address to, uint256 tokenId) public {
+        require(msg.sender == _tokens[tokenId].owner, "Only owner can grant permission.");
+        _tokens[tokenId].grantedAccess = to;
     }
 
     /**
