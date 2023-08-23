@@ -101,6 +101,7 @@ contract Assets {
     ) public onlyTokenizer returns (uint256) {
         _tokens[_nextTokenId] = Token({
             owner: to,
+            grantedAccess: address(0),
             governmentRegistryId: tokenGovernmentRegistryId,
             name: tokenName,
             description: tokenDescription
