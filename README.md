@@ -25,6 +25,9 @@ cp .env.example .env
 # Add local Ganache to use in tests.
 brownie networks add Ethereum ganache-local host=http://127.0.0.1:8545 chainid=1337
 
+#add ganash npm packet
+npm install -g ganache-cli
+
 # Run tests on defined network.
 brownie test --network development
 

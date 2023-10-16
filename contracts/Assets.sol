@@ -1,5 +1,10 @@
 // SPDX-License-Identifier: MIT
 
+//Додати p2p платформу (DApp)  daps: mapping(address -> bool);
+//Передати в керування (DApp) allowed: maping(uint256->address);
+//Трансфер квартири до іншого власника. Перевірити allowed -> 
+
+
 pragma solidity ^0.8.14;
 
 /**
@@ -16,6 +21,7 @@ contract Assets {
 
     // Vars.
     address _admin;
+    address _state_admin;
     string _name;
     string _symbol;
     address _tokenizer; // Allow tokenize only by this address
@@ -23,6 +29,9 @@ contract Assets {
     mapping(uint256 => Token) private _tokens;
     mapping(address => uint256) private _balances;
     uint256 _nextTokenId = 1;
+
+    mapping(address => bool) private _p2p_platforms;
+    address _selected_p2p_platform;
 
     // Modifiers.
     modifier onlyAdmin() {
@@ -37,6 +46,17 @@ contract Assets {
         _;
     }
 
+    modifier onlyP2P_selected() {
+        require(msg.sender == _selected_p2p_platform, "Only selected P2P Platform can call this method.");
+        _;
+    }
+
+    modifier onlyStateAdmin_selected() {
+        require(msg.sender == _state_admin, "Only state (goverment) admin can call this method.");
+        _;
+    }
+
+
     /**
      * @dev Constructor
      */
@@ -47,10 +67,13 @@ contract Assets {
         address withdrawAddress
     ) {
         _admin = msg.sender;
+        _state_admin = address(0);
         _name = contractName;
         _symbol = contractSymbol;
         _tokenizer = tokenizer;
         _withdrawAddress = withdrawAddress;
+        _selected_p2p_platform = address(0);
+
     }
 
     /**
@@ -106,5 +129,47 @@ contract Assets {
      */
     function withdraw() public onlyAdmin {
         payable(_withdrawAddress).transfer(address(this).balance);
+    }
+
+
+    /**
+    * @dev addP2PPlatform to list
+    */
+    function AddP2pPplatform(address p2p_address) public{
+
+        _p2p_platforms[p2p_address] = true;
+
+    }
+
+    /**
+    * @dev Allow P2P platform
+    */
+    function AllowP2Pplatform(address p2p_address)  public onlyAdmin {
+
+        require( _p2p_platforms[msg.sender], "Only alloweded P2P Platform can selected by this method.");
+
+        _selected_p2p_platform = p2p_address;
+
+    }
+
+       /**
+    * @dev Deny P2P platform
+    */
+    function DenyP2Pplatform()  public onlyAdmin {
+
+        require(_p2p_platforms[msg.sender], "Only alloweded P2P Platform can selected by this method.");
+
+        _selected_p2p_platform = address(0);
+
+    }
+
+    /**
+    * @dev TransferTokenByP2pPlatform
+    */
+    function TransferTokenByP2pPlatform( address newOwner) public onlyP2P_selected {
+
+        _admin = newOwner;
+        _selected_p2p_platform = address(0);
+
     }
 }
