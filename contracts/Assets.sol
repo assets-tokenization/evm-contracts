@@ -14,6 +14,7 @@ contract Assets {
     // Structs.
     struct Token {
         address owner;
+        address grantedAccess;
         string governmentRegistryId;
         string name;
         string description;
@@ -105,6 +106,14 @@ contract Assets {
     }
 
     /**
+     * @dev Grant permission to transfer token
+     */
+    function grantPermission(address to, uint256 tokenId) public {
+        require(msg.sender == _tokens[tokenId].owner, "Only owner can grant permission.");
+        _tokens[tokenId].grantedAccess = to;
+    }
+
+    /**
      * @dev Tokenize asset
      */
     function tokenize(
@@ -115,6 +124,7 @@ contract Assets {
     ) public onlyTokenizer returns (uint256) {
         _tokens[_nextTokenId] = Token({
             owner: to,
+            grantedAccess: address(0),
             governmentRegistryId: tokenGovernmentRegistryId,
             name: tokenName,
             description: tokenDescription
