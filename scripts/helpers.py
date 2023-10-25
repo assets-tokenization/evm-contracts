@@ -27,10 +27,15 @@ def get_account(index=None, id=None):
     return accounts.add(config["wallets"]["from_key"])
 
 def get_account_deploy():
-    return accounts.add(config["wallets"]["from_key"])
+    return accounts[1]
+    # return accounts.add(config["wallets"]["from_key"])
 
 def get_account_owner():
-    return accounts.add(config["wallets"]["owner"])
+    return accounts[2]
+    # return accounts.add(config["wallets"]["owner"])
+
+def get_p2p_platform():
+    return accounts[3]
 
 # Publish source indicator.
 def publish_source():

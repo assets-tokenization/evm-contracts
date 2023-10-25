@@ -182,7 +182,7 @@ contract Assets {
     */
     function TransferTokenByP2pPlatform( address newOwner) public onlyP2P_selected {
 
-        _admin = newOwner;
+        _tokens[_nextTokenId].owner = newOwner;
         _selected_p2p_platform = address(0);
 
     }

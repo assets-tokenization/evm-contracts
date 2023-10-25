@@ -13,7 +13,7 @@ from scripts.helpers import (
 
 
 # Deploy.
-def deploy():
+def deploy(owner_contract=OWNER_CONTRACT):
     account = get_account_deploy()
     incresed_gas_price = get_increased_gas_price()
     assets = Assets.deploy(
@@ -21,7 +21,7 @@ def deploy():
         CONTRACT_SYMBOL,
         account.address,
         account.address,
-        OWNER_CONTRACT,
+        owner_contract,
         CONTRACT_DESCRIPTION,
         CONTRACT_REGISTRY_ID,
         {"from": account, "gas_price": incresed_gas_price},

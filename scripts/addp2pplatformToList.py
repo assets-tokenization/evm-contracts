@@ -2,6 +2,8 @@
 from brownie import Assets
 from scripts.helpers import (
     get_account,
+    get_account_owner,
+    get_account_deploy,
     publish_source,
     get_increased_gas_price,
     P2P_PLATFORM
@@ -10,7 +12,7 @@ from scripts.helpers import (
 
 # Deploy.
 def AddP2pPplatform(assets):
-    account = get_account()
+    account = get_account_deploy()
     incresed_gas_price = get_increased_gas_price()
     assets.AddP2pPplatform(
         P2P_PLATFORM,
