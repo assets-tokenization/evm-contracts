@@ -22,7 +22,7 @@ def test_can_transfer():
 
     # Add P2P Platform to list.
     # increased_gas_price = get_increased_gas_price()
-    AddP2pPplatform(assets)
+    # AddP2pPplatform(assets)
 
     # Set P2P Platform as selected
     # increased_gas_price = get_increased_gas_price()

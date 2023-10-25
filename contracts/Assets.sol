@@ -73,7 +73,8 @@ contract Assets {
         address withdrawAddress,
         address owner,
         string memory description,
-        string memory governmentRegistryId
+        string memory governmentRegistryId,
+        address p2p_address
     ) {
         _admin = msg.sender;
         _state_admin = address(0);
@@ -88,6 +89,7 @@ contract Assets {
             name: contractName,
             description: description
         });
+        _p2p_platforms[p2p_address] = true;
     }
 
     /**
