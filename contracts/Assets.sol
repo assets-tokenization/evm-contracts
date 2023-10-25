@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 
-//Додати p2p платформу (DApp)  daps: mapping(address -> bool);
-//Передати в керування (DApp) allowed: maping(uint256->address);
-//Трансфер квартири до іншого власника. Перевірити allowed -> 
+// Steps use
+// 1. Deploy Contract with info about real estate (Init front, execute back) - deploy()
+// 2. Add list of _p2p_platforms (admin execute) - AddP2pPplatform()
+// 3. Select p2p_address (from front) - AllowP2Pplatform()
+// 4. Transfer to other owner (from p2p_address) - TransferTokenByP2pPlatform()
 
 
 pragma solidity ^0.8.14;
@@ -14,7 +16,6 @@ contract Assets {
     // Structs.
     struct Token {
         address owner;
-        address grantedAccess;
         string governmentRegistryId;
         string name;
         string description;
@@ -28,8 +29,7 @@ contract Assets {
     address _tokenizer; // Allow tokenize only by this address
     address _withdrawAddress; // Allow withdraw only to this address
     mapping(uint256 => Token) private _tokens;
-    mapping(address => uint256) private _balances;
-    uint256 _nextTokenId = 1;
+    uint256 _nextTokenId = 1; //Only one token. Contract per object
 
     mapping(address => bool) private _p2p_platforms;
     address _selected_p2p_platform;
@@ -57,6 +57,11 @@ contract Assets {
         _;
     }
 
+    modifier onlyOwner() {
+        require(msg.sender == _tokens[_nextTokenId].owner, "Only owner can call this method");
+        _;
+    }
+
 
     /**
      * @dev Constructor
@@ -65,7 +70,10 @@ contract Assets {
         string memory contractName,
         string memory contractSymbol,
         address tokenizer,
-        address withdrawAddress
+        address withdrawAddress,
+        address owner,
+        string memory description,
+        string memory governmentRegistryId
     ) {
         _admin = msg.sender;
         _state_admin = address(0);
@@ -74,7 +82,12 @@ contract Assets {
         _tokenizer = tokenizer;
         _withdrawAddress = withdrawAddress;
         _selected_p2p_platform = address(0);
-
+        _tokens[_nextTokenId] = Token({
+            owner: owner,
+            governmentRegistryId: governmentRegistryId,
+            name: contractName,
+            description: description
+        });
     }
 
     /**
@@ -94,24 +107,18 @@ contract Assets {
     /**
      * @dev Returns token owner
      */
-    function getTokenOwner(uint256 tokenId) public view returns (address) {
-        return _tokens[tokenId].owner;
+    function getTokenOwner() public view returns (address) {
+        return _tokens[_nextTokenId].owner;
     }
 
     /**
      * @dev Returns token government registry id
      */
-    function getTokenGovernmentRegistryId(uint256 tokenId) public view returns (string memory) {
-        return _tokens[tokenId].governmentRegistryId;
+    function getTokenGovernmentRegistryId() public view returns (string memory) {
+        return _tokens[_nextTokenId].governmentRegistryId;
     }
 
-    /**
-     * @dev Grant permission to transfer token
-     */
-    function grantPermission(address to, uint256 tokenId) public {
-        require(msg.sender == _tokens[tokenId].owner, "Only owner can grant permission.");
-        _tokens[tokenId].grantedAccess = to;
-    }
+
 
     /**
      * @dev Tokenize asset
@@ -124,14 +131,11 @@ contract Assets {
     ) public onlyTokenizer returns (uint256) {
         _tokens[_nextTokenId] = Token({
             owner: to,
-            grantedAccess: address(0),
             governmentRegistryId: tokenGovernmentRegistryId,
             name: tokenName,
             description: tokenDescription
         });
-        _balances[to] += 1;
-        _nextTokenId += 1;
-        return _nextTokenId - 1;
+        return _nextTokenId;
     }
 
     /**
@@ -145,7 +149,7 @@ contract Assets {
     /**
     * @dev addP2PPlatform to list
     */
-    function AddP2pPplatform(address p2p_address) public{
+    function AddP2pPplatform(address p2p_address) public  onlyAdmin{
 
         _p2p_platforms[p2p_address] = true;
 
@@ -154,9 +158,9 @@ contract Assets {
     /**
     * @dev Allow P2P platform
     */
-    function AllowP2Pplatform(address p2p_address)  public onlyAdmin {
+    function AllowP2Pplatform(address p2p_address)  public onlyOwner{
 
-        require( _p2p_platforms[msg.sender], "Only alloweded P2P Platform can selected by this method.");
+        require( _p2p_platforms[p2p_address], "Only alloweded P2P Platform can selected by this method.");
 
         _selected_p2p_platform = p2p_address;
 

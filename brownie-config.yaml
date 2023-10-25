@@ -2,9 +2,16 @@ dotenv: .env
 constructor-args:
   contract_name: ${TOKEN_NAME}
   contract_symbol: ${TOKEN_SYMBOL}
+  owner_contract: ${OWNER_CONTRACT}
+  contract_description: ${CONTRACT_DESCRIPTION}
+  contract_registry_id: ${CONTRACT_REGISTRY_ID}
+p2p_platform-args:
+  allowed_p2p: ${P2P_PLATFORM}
+  new_owner: ${NEW_OWNER}
 gas_price_increase_coefficient: ${GAS_PRICE_INCREASE_COEFFICIENT}
 wallets:
   from_key: ${ACCOUNT_PRIVATE_KEY}
+  owner: ${OWNER_CONTRACT}
 networks:
   default: development
   development:
@@ -21,3 +28,5 @@ networks:
     verify: True
   polygon-main:
     verify: True
+  kitsoft-ber:
+    verify: False

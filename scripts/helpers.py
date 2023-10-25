@@ -8,7 +8,13 @@ LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
 # Config params.
 CONTRACT_NAME = config["constructor-args"]["contract_name"]
 CONTRACT_SYMBOL = config["constructor-args"]["contract_symbol"]
+OWNER_CONTRACT = config["constructor-args"]["owner_contract"]
+OWNER_CONTRACT_NEW = config["p2p_platform-args"]["new_owner"]
+CONTRACT_DESCRIPTION = config["constructor-args"]["contract_description"]
+CONTRACT_REGISTRY_ID = config["constructor-args"]["contract_registry_id"]
+P2P_PLATFORM = config["p2p_platform-args"]["allowed_p2p"]
 GAS_PRICE_INCREASE_COEFFICIENT = float(config["gas_price_increase_coefficient"])
+
 
 # Get account.
 def get_account(index=None, id=None):
@@ -20,6 +26,11 @@ def get_account(index=None, id=None):
         return accounts.load(id)
     return accounts.add(config["wallets"]["from_key"])
 
+def get_account_deploy():
+    return accounts.add(config["wallets"]["from_key"])
+
+def get_account_owner():
+    return accounts.add(config["wallets"]["owner"])
 
 # Publish source indicator.
 def publish_source():
