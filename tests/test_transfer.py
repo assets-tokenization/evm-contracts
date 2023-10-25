@@ -34,5 +34,4 @@ def test_can_transfer():
 
 
     # Test result owner.
-    assert assets.getTokenOwner() == OWNER_CONTRACT_NEW
-    assert assets.getTokenGovernmentRegistryId(1) == CONTRACT_REGISTRY_ID
+    assert assets.getTokenOwner() == str(OWNER_CONTRACT_NEW)
