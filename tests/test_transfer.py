@@ -32,6 +32,5 @@ def test_can_transfer():
     increased_gas_price = get_increased_gas_price()
     TransferTokenByP2pPlatform(assets)
 
-
     # Test result owner.
     assert assets.getTokenOwner() == str(OWNER_CONTRACT_NEW)
