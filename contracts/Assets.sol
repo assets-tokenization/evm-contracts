@@ -120,8 +120,6 @@ contract Assets {
         return _tokens[_nextTokenId].governmentRegistryId;
     }
 
-
-
     /**
      * @dev Tokenize asset
      */
