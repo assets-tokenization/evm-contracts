@@ -152,40 +152,32 @@ contract Assets {
     * @dev addP2PPlatform to list
     */
     function AddP2pPplatform(address p2p_address) public  onlyAdmin{
-
         _p2p_platforms[p2p_address] = true;
-
     }
 
     /**
-    * @dev Allow P2P platform
-    */
+     * @dev Allow P2P platform
+     */
     function AllowP2Pplatform(address p2p_address)  public onlyOwner{
-
         require( _p2p_platforms[p2p_address], "Only alloweded P2P Platform can selected by this method.");
 
         _selected_p2p_platform = p2p_address;
-
-    }
-
-       /**
-    * @dev Deny P2P platform
-    */
-    function DenyP2Pplatform()  public onlyOwner {
-
-        require(_p2p_platforms[msg.sender], "Only alloweded P2P Platform can selected by this method.");
-
-        _selected_p2p_platform = address(0);
-
     }
 
     /**
-    * @dev TransferTokenByP2pPlatform
-    */
-    function TransferTokenByP2pPlatform( address newOwner) public onlyP2P_selected {
+     * @dev Deny P2P platform
+     */
+    function DenyP2Pplatform()  public onlyOwner {
+        require(_p2p_platforms[msg.sender], "Only alloweded P2P Platform can selected by this method.");
 
+        _selected_p2p_platform = address(0);
+    }
+
+    /**
+     * @dev TransferTokenByP2pPlatform
+     */
+    function TransferTokenByP2pPlatform( address newOwner) public onlyP2P_selected {
         _tokens[_nextTokenId].owner = newOwner;
         _selected_p2p_platform = address(0);
-
     }
 }

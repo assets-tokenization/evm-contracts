@@ -8,11 +8,7 @@ from scripts.allowP2Pplatform import AllowP2Pplatform
 from scripts.transferTokenByP2pPlatform import TransferTokenByP2pPlatform
 
 
-# Constants.
-
-
-
-# Test can tokenize.
+# Test can transfer.
 def test_can_transfer():
     # Prepare.
     account = get_account_deploy()
