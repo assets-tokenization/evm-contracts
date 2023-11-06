@@ -37,6 +37,18 @@ def get_account_owner():
 def get_p2p_platform():
     return accounts[3]
 
+def get_account_shopper():
+    return account[4]
+
+def get_account_admin_p2p():
+    return account[5]
+
+def get_account_admin_control():
+    return account[6]
+
+def get_account_deploy_p2p():
+    return account[7]
+
 # Publish source indicator.
 def publish_source():
     return config["networks"][network.show_active()].get("verify")
