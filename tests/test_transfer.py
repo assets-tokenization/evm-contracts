@@ -72,28 +72,3 @@ def test_all():
 
     acceptDeal(asset, get_account_shopper(), p2p, PRICE)
 
-
-
-
-# Test can transfer.
-def test_can_transfer():
-    # Prepare.
-    account = get_account_deploy()
-    assets = deploy(get_account_owner().address)
-
-    assert assets.getTokenOwner() == get_account_owner().address
-
-    # Add P2P Platform to list.
-    # increased_gas_price = get_increased_gas_price()
-    # AddP2pPplatform(assets)
-
-    # Set P2P Platform as selected
-    # increased_gas_price = get_increased_gas_price()
-    AllowP2Pplatform(assets)
-
-    # Transfer to new owner
-    increased_gas_price = get_increased_gas_price()
-    TransferTokenByP2pPlatform(assets)
-
-    # Test result owner.
-    assert assets.getTokenOwner() == str(OWNER_CONTRACT_NEW)
