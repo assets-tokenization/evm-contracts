@@ -9,8 +9,8 @@
 
 pragma solidity ^0.8.14;
 
-contract P2PPlatform {
-    function getObject( address object, address owner) public {}
+interface P2PPlatform {
+    function getObject( address, address) external;
 }
 
 /**
@@ -26,6 +26,7 @@ contract Assets {
     }
 
     // Vars.
+    P2PPlatform public p2p_target;
     address _admin;
     address _state_admin;
     string _name;
@@ -160,10 +161,15 @@ contract Assets {
     /**
      * @dev Allow P2P platform
      */
-    function AllowP2Pplatform(address p2p_address)  public onlyOwner{
+    function AllowP2Pplatform(address p2p_address)  public  onlyOwner{
         require( _p2p_platforms[p2p_address], "Only alloweded P2P Platform can selected by this method.");
 
+        p2p_target = P2PPlatform(p2p_address);
+
         _selected_p2p_platform = p2p_address;
+
+        p2p_target.getObject(address(this), msg.sender);
+
     }
 
     /**

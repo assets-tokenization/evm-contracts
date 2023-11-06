@@ -2,18 +2,29 @@
 
 pragma solidity ^0.8.14;
 
-contract Asset {
-    function TransferTokenByP2pPlatform( address newOwner) public {}
+/**
+* @dev Interface for Asset contract
+*/
+interface Asset {
+    function TransferTokenByP2pPlatform( address) external;
 }
 
 contract P2PPlatform {
 
+
+
+    /**
+    * @dev Information and status about object by platform control
+    */
     struct ControlledObject {
         address Owner;
         uint DateFrom;
         bool Status;
     }
 
+    /**
+    * @dev State of deals by object's
+    */
     struct Deals {
         address Shopper;
         uint Price;
@@ -24,7 +35,7 @@ contract P2PPlatform {
 
     //Vars
     address _Administrator;
-    address _Control;
+    address _Control;           //TODO
     mapping(address=>ControlledObject) _controlledObjects;
     mapping(address=>Deals) _deals;
 
@@ -48,21 +59,20 @@ contract P2PPlatform {
         _Control = control;
     }
 
+
+
     function getObject( address object, address owner) public {
 
         _controlledObjects[object] = ControlledObject(owner, block.timestamp, true);
 
     }
 
-    function setDeal(uint price, address object) public onlyOwner(object) {
-        _deals[object] = Deals(address(0), price, block.timestamp, 0, false);
+    function setDeal(uint price, address object, address schopper) public onlyOwner(object) {
+        _deals[object] = Deals(schopper, price, block.timestamp, 0, false);
     }
 
-    function acceptDeal(address object) public {
-        _deals[object].Shopper = msg.sender;
-    }
-
-    function finishDeal(address object) public onlyAdmin {
+    function acceptDeal(address object) public payable {
+        require(msg.value == _deals[object].Price, "This method requred payment exactly with price");
         _deals[object].DateTransaction = block.timestamp;
         _deals[object].Status = true;
         Asset _asset;
@@ -70,5 +80,6 @@ contract P2PPlatform {
         _asset.TransferTokenByP2pPlatform(_deals[object].Shopper);
         _controlledObjects[object].Status = false;
     }
+
 
 }
