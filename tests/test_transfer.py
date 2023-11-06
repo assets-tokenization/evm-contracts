@@ -51,14 +51,9 @@ def test_deal():
 
     setDeal(PRICE, asset, get_account_shopper(), p2p)
 
-    tx = listDeal(get_account_shopper(), p2p)
-
-    print(tx)
+    listDeal(get_account_shopper(), p2p)
 
     
-
-
-
 
 def test_all():
     p2p = deploy_p2p();
@@ -75,7 +70,7 @@ def test_all():
 
     listDeal(get_account_shopper(), p2p)
 
-    acceptDeal(asset, get_account_shopper(), p2p)
+    acceptDeal(asset, get_account_shopper(), p2p, PRICE)
 
 
 

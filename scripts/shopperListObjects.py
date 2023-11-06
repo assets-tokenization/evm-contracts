@@ -11,10 +11,12 @@ from scripts.helpers import (
 
 # Deploy.
 def listDeal(shopper,p2p):
-    incresed_gas_price = get_increased_gas_price()
+    list = incresed_gas_price = get_increased_gas_price()
     p2p.myDeals(
         {"from": shopper, "gas_price": incresed_gas_price}
     ).wait(1)
+
+    return list;
 
 
 # Main.

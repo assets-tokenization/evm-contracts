@@ -10,11 +10,11 @@ from scripts.helpers import (
 
 
 # Deploy.
-def acceptDeal(asset, shopper,p2p):
+def acceptDeal(asset, shopper,p2p, price):
     incresed_gas_price = get_increased_gas_price()
     p2p.acceptDeal(
-        p2p.address,
-        {"from": shopper, "gas_price": incresed_gas_price}
+        asset.address,
+        {"from": shopper, "value": price,  "gas_price": incresed_gas_price}
     ).wait(1)
 
 
