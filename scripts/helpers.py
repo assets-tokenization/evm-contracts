@@ -10,6 +10,7 @@ CONTRACT_NAME = config["constructor-args"]["contract_name"]
 CONTRACT_SYMBOL = config["constructor-args"]["contract_symbol"]
 OWNER_CONTRACT = config["constructor-args"]["owner_contract"]
 OWNER_CONTRACT_NEW = config["p2p_platform-args"]["new_owner"]
+ADMIN_P2P = config["p2p_platform-args"]["admin"]
 CONTRACT_DESCRIPTION = config["constructor-args"]["contract_description"]
 CONTRACT_REGISTRY_ID = config["constructor-args"]["contract_registry_id"]
 P2P_PLATFORM = config["p2p_platform-args"]["allowed_p2p"]
@@ -38,16 +39,14 @@ def get_p2p_platform():
     return accounts[3]
 
 def get_account_shopper():
-    return account[4]
+    return accounts[4]
 
 def get_account_admin_p2p():
-    return account[5]
+    return accounts[5]
 
-def get_account_admin_control():
-    return account[6]
+def get_account_control_p2p():
+    return accounts[6]
 
-def get_account_deploy_p2p():
-    return account[7]
 
 # Publish source indicator.
 def publish_source():

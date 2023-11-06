@@ -8,6 +8,8 @@ constructor-args:
 p2p_platform-args:
   allowed_p2p: ${P2P_PLATFORM}
   new_owner: ${NEW_OWNER}
+  admin: ${P2P_ADMIN}
+  controller: ${P2P_CONTROL}
 gas_price_increase_coefficient: ${GAS_PRICE_INCREASE_COEFFICIENT}
 wallets:
   from_key: ${ACCOUNT_PRIVATE_KEY}

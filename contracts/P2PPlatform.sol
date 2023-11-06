@@ -11,8 +11,6 @@ interface Asset {
 
 contract P2PPlatform {
 
-
-
     /**
     * @dev Information and status about object by platform control
     */
@@ -54,7 +52,7 @@ contract P2PPlatform {
     }
 
     modifier onlyShopper(address controbject) {
-        require( msg.sender == _deals[controbject].Shopper , "Only owner can call this method.");
+        require( msg.sender == _deals[controbject].Shopper , "Only shopper can call this method.");
         _;
     }
 
@@ -115,7 +113,7 @@ contract P2PPlatform {
     }
 
 
-    function myDeals() public returns(address[] memory){
+    function myDeals() public returns(address[] memory) {
 
         return _shoppers_deals[msg.sender];
 

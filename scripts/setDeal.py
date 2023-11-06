@@ -1,5 +1,5 @@
 # Import.
-from brownie import Assets
+from brownie import Assets, P2PPlatform
 from scripts.helpers import (
     publish_source,
     get_increased_gas_price,
@@ -10,17 +10,20 @@ from scripts.helpers import (
 
 
 # Deploy.
-def AllowP2Pplatform(assets, p2p_platform):
+def setDeal(price, asset, shopper,p2p):
     account = get_account_owner()
     incresed_gas_price = get_increased_gas_price()
-    assets.AllowP2Pplatform(
-        p2p_platform.address,
+    p2p.setDeal(
+        price,
+        asset.address,
+        shopper.address,
         {"from": account, "gas_price": incresed_gas_price}
     ).wait(1)
 
 
 # Main.
 def main():
-    assets = Assets[-1]
-    AllowP2Pplatform(assets)
+    asset = Assets[-1]
+    p2p = P2PPlatform[-1]
+    setDeal('1000000000000', asset, get_account_shopper(), p2p)
     return assets
