@@ -11,7 +11,7 @@ from scripts.helpers import (
 
 # Deploy.
 def deploy_p2p():
-    account = accounts.load('kitsoft');
+    account = get_account_admin_p2p();
     incresed_gas_price = get_increased_gas_price();
     p2p = P2PPlatform.deploy(
         ADMIN_P2P,
