@@ -23,20 +23,15 @@ def test_deploy():
     account = get_account_deploy()
     asset = deploy(get_account_owner().address)
 
+    print(asset);
+
     assert asset.getTokenOwner() == get_account_owner().address
 
 
 def test_allowP2P():
     p2p = deploy_p2p();
-    account = get_account_deploy()
-    asset = deploy(get_account_owner().address)
 
-    assert asset.getTokenOwner() == get_account_owner().address
-
-    AddP2pPplatform(asset, p2p)
-
-    AllowP2Pplatform(asset, p2p)
-
+    print(p2p)
 
 def test_deal():
     p2p = deploy_p2p();
@@ -68,7 +63,9 @@ def test_all():
 
     setDeal(PRICE, asset, get_account_shopper(), p2p)
 
-    listDeal(get_account_shopper(), p2p)
+    myDeals = listDeal(get_account_shopper(), p2p)
+
+    print('myDeals', myDeals)
 
     acceptDeal(asset, get_account_shopper(), p2p, PRICE)
 

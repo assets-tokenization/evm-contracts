@@ -113,11 +113,10 @@ contract P2PPlatform {
     }
 
 
-    function myDeals() public returns(address[] memory) {
+    function myDeals() public view returns(address[] memory) {
 
         return _shoppers_deals[msg.sender];
 
-    } 
-
+    }
 
 }

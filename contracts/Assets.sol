@@ -176,8 +176,6 @@ contract Assets {
      * @dev Deny P2P platform
      */
     function DenyP2Pplatform()  public onlyOwner {
-        require(_p2p_platforms[msg.sender], "Only alloweded P2P Platform can selected by this method.");
-
         _selected_p2p_platform = address(0);
     }
 

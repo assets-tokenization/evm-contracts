@@ -13,12 +13,14 @@ from scripts.helpers import (
 def setDeal(price, asset, shopper,p2p):
     account = get_account_owner()
     incresed_gas_price = get_increased_gas_price()
-    p2p.setDeal(
+    ret = p2p.setDeal(
         price,
         asset.address,
         shopper.address,
         {"from": account, "gas_price": incresed_gas_price}
-    ).wait(1)
+    )
+
+    return ret;
 
 
 # Main.
